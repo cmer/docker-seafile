@@ -1,0 +1,14 @@
+SEAFILE_NAME=Seafile
+SEAFILE_ADDRESS=seafile.local
+SEAFILE_ADMIN=foo@example.org
+SEAFILE_ADMIN_PW=LoremIpsum
+
+# Use this for MySQL/MariaDB backend
+#MYSQL_SERVER=172.17.0.2
+#MYSQL_USER=seafile
+#MYSQL_USER_PASSWORD=qweasd
+#MYSQL_USER_HOST=%
+#MYSQL_ROOT_PASSWORD=12345
+
+# Use this to install the Professional edition of Seafile
+#USE_PRO=false
