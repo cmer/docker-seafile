@@ -7,10 +7,10 @@ set -o pipefail
 
 DATADIR=${DATADIR:-"/seafile"}
 BASEPATH=${BASEPATH:-"/opt/haiwen"}
-USE_PRO=${USE_PRO:-false}
+PRO=${PRO:-false}
 LICENSE_FILE=$DATADIR/seafile-license.txt
 
-if [ "$USE_PRO" = true ] ; then
+if [ "$PRO" = true ] ; then
   echo "Using Professional Edition..."
   INSTALLPATH=${INSTALLPATH:-"${BASEPATH}/$(ls -1vr ${BASEPATH} | grep -E -m 1 '^seafile-pro-server-[0-9.-]+')"}
 

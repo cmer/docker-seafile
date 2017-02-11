@@ -1,8 +1,7 @@
-: ${USE_PRO=false}
-: ${FORCE_INSTALL=false}
+: ${PRO=false}
 : ${PRO_URL=https://download.seafile.com/d/6e5297246c/?p=/pro}
 
-if [ "$USE_PRO" = true ] ; then
+if [ "$PRO" = true ] ; then
   echo "Installing Professional Edition..."
   pro_user_id=`echo $PRO_URL | ack -o '(?<=\/d\/)[a-z0-9]*(?=\/)'`
   pro_filename=$(curl -sL $PRO_URL \

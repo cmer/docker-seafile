@@ -78,7 +78,7 @@ If you want to use MySQL/MariaDB, the following variables are needed:
 * **MYSQL_ROOT_PASSWORD**: If you haven't set up the MySQL tables by yourself, Seafile will do it for you when being provided with the MySQL root password
 
 **Optional ENV variable to use the Professional edition of Seafile**
-* **USE_PRO**: Download and run Pro (default: false)
+* **PRO**: Download and run Pro (default: false)
 
 If you plan on omitting /seafile as a volume and mount the subdirectories instead, you'll need to additionally specify `SEAHUB_DB_DIR` which containes the subdirectory of /seafile the *seahub.db* file shall be put in.
 
