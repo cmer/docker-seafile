@@ -84,8 +84,10 @@ If you plan on omitting /seafile as a volume and mount the subdirectories instea
 
 There are some more variables which could be changed but have not been tested and are probably not fully functional as well. Therefore those not mentioned here. Inspect the `seafile-entrypoint.sh` script if you have additional needs for customization.
 
-### Professional License File
+### Migration to Professional Edition
 If you have a Professional Edition license file, you must place it in the directory that is mounted as `/seafile` inside the container. For example: `/home/data/seafile/seafile-license.txt` on the Docker host.
+
+For further instructions, see [Migrate from Seafile Community Server](https://manual.seafile.com/deploy_pro/migrate_from_seafile_community_server.html).
 
 ### Web server
 This container does not include a web server. It's intended to be run behind a reverse proxy. You can read more about that in the Seafile manual: http://manual.seafile.com/deploy/
