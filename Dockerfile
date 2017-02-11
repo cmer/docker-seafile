@@ -9,10 +9,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 
 # RUN pip install pylibmc django-pylibmc
 
-# libreoffice \
-# libreoffice-script-provider-python ttf-wqy-microhei \
-# ttf-wqy-zenhei xfonts-wqy
-
 COPY ["install.sh", "/tmp/"]
 COPY ["download.sh", "/usr/local/bin/"]
 COPY ["seafile-entrypoint.sh", "/usr/local/bin/"]

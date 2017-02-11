@@ -207,12 +207,6 @@ _EOF_
 }
 
 control_seafile() {
-  echo "$@"
-  echo ". /tmp/seafile.env; ${INSTALLPATH}/seafile.sh "$@""
-  if [ $@ == 'start' ]; then
-    sleep 5
-  fi
-
   gosu seafile bash -c ". /tmp/seafile.env; ${INSTALLPATH}/seafile.sh "$@""
   local RET=$?
   sleep 1
@@ -220,12 +214,6 @@ control_seafile() {
 }
 
 control_seahub() {
-  # echo "$@"
-  # echo ". /tmp/seafile.env; ${INSTALLPATH}/seahub.sh "$@""
-  # if [ $@ == 'start' ]; then
-  #   sleep 15
-  # fi
-
   gosu seafile bash -c ". /tmp/seafile.env; ${INSTALLPATH}/seahub.sh "$@""
   local RET=$?
   sleep 1

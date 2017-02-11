@@ -17,13 +17,3 @@ fi
 echo "Downloading & Extracting $download_path..."
 curl -sL $download_path | tar -C /opt/haiwen/ -xz
 chown -R seafile:seafile /opt/haiwen
-
-# if [ "$USE_PRO" = true ] ; then
-#   echo "Installing additional packages required for Professional Edition..."
-#   DEBIAN_FRONTEND=noninteractive apt-get update \
-#     && apt-get install -y openjdk-8-jre libreoffice \
-#     libreoffice-script-provider-python ttf-wqy-microhei \
-#     ttf-wqy-zenhei xfonts-wqy poppler-utils \
-#   && apt-get clean && rm -rf /var/lib/apt/lists/*
-# fi
-
