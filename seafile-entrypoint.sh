@@ -33,6 +33,8 @@ trapped() {
 autorun() {
   # If there's an existing seafile config, link the dirs
   move_and_link
+  migrate_to_pro
+
   # Needed to check the return code
   set +e
   control_seafile "start"
@@ -223,6 +225,15 @@ control_seahub() {
   return ${RET}
 }
 
+migrate_to_pro() {
+  # https://manual.seafile.com/deploy_pro/migrate_from_seafile_community_server.html
+  migrated_to_pro_file=$DATADIR/.migrated_to_pro
+  if [ $PRO = true ] && [ ! -f $DATADIR/.migrated_to_pro ]; then
+    . /tmp/seafile.env
+    echo | $INSTALLPATH/pro/pro.py setup --migrate
+    touch $migrated_to_pro_file
+  fi
+}
 
 # Fill vars with defaults if empty
 MODE=${1:-"run"}
