@@ -3,12 +3,12 @@ set -e
 set -u
 set -o pipefail
 
-/usr/local/bin/download.sh
-
 DATADIR=${DATADIR:-"/seafile"}
 BASEPATH=${BASEPATH:-"/opt/haiwen"}
 PRO=${PRO:-false}
 LICENSE_FILE=$DATADIR/seafile-license.txt
+
+/usr/local/bin/download.sh
 
 if [ "$PRO" = true ] ; then
   echo "Using Professional Edition..."

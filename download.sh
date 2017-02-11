@@ -1,4 +1,3 @@
-: ${PRO=false}
 : ${PRO_URL=https://download.seafile.com/d/6e5297246c/?p=/pro}
 
 if [ "$PRO" = true ] ; then
@@ -14,5 +13,5 @@ else
 fi
 
 echo "Downloading & Extracting $download_path..."
-curl -sL $download_path | tar -C /opt/haiwen/ -xz
-chown -R seafile:seafile /opt/haiwen
+curl -sL $download_path | tar -C $BASEPATH -xz
+chown -R seafile:seafile $BASEPATH
