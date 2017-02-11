@@ -23,5 +23,6 @@ ENV SEAFILE_ADDRESS=127.0.0.1
 ENV SEAFILE_ADMIN=admin@example.org
 ENV SEAFILE_ADMIN_PW=
 ENV PRO=false
+ENV FORCE_PERMISSIONS=false
 
 ENTRYPOINT ["/usr/bin/dumb-init", "/usr/local/bin/seafile-entrypoint.sh"]

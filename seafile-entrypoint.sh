@@ -139,11 +139,14 @@ move_and_link() {
   move_files "${SH_DB_DIR}"
   link_files "${SH_DB_DIR}"
 
-  echo "Changing ownership of $DATADIR. Please be patient, this could take a while..."
-  # SLOW:
-  # chown -R seafile:seafile ${DATADIR}/
-  # FASTER:
-  find $DATADIR -not -user seafile -execdir chown seafile:seafile {} \+
+  # This is slow. Don't force permissions needlessly
+  if [ "$FORCE_PERMISSIONS" = true ] ; then
+    echo "Changing ownership of $DATADIR. Please be patient, this could take a while..."
+    # SLOW:
+    # chown -R seafile:seafile ${DATADIR}/
+    # LESS SLOW:
+    find $DATADIR -not -user seafile -execdir chown seafile:seafile {} \+
+  fi
 }
 
 move_files() {
