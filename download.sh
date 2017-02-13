@@ -1,4 +1,6 @@
 : ${PRO_URL=https://download.seafile.com/d/6e5297246c/?p=/pro}
+: ${BASEPATH=/opt/haiwen}
+: ${PRO:false}
 
 if [ "$PRO" = true ] ; then
   echo "Installing Professional Edition..."
