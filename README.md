@@ -95,6 +95,7 @@ For further instructions, see [Migrate from Seafile Community Server](https://ma
 ### Web server
 This container does not include a web server. It's intended to be run behind a reverse proxy. You can read more about that in the Seafile manual: http://manual.seafile.com/deploy/
 
+If you want to run seahub in fastcgi mode, you can pass ENV variables **SEAFILE_FASTCGI=1** and **SEAFILE_FASTCGI_HOST=0.0.0.0**
 ### Credits
 
 Special thanks to [Till Wiese](https://github.com/m3adow). This container is a fork of his work. He deserves all the credit.
