@@ -1,5 +1,5 @@
 DEBIAN_FRONTEND=noninteractive apt-get update \
-  && apt-get install -y python2.7 libpython2.7 python-mysqldb \
+  && apt-get install -y locales python2.7 libpython2.7 python-mysqldb \
       python-setuptools python-dev python-pip python-imaging python-ldap \
       python-urllib3 sqlite3 python-memcache curl ack-grep libnss3 \
       openjdk-8-jre poppler-utils ffmpeg libmemcached-dev libz-dev \
