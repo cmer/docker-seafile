@@ -6,6 +6,7 @@ set -o pipefail
 DATADIR=${DATADIR:-"/seafile"}
 BASEPATH=${BASEPATH:-"/opt/haiwen"}
 PRO=${PRO:-false}
+VERSION=${VERSION:-"latest"}
 LICENSE_FILE=$DATADIR/seafile-license.txt
 
 /usr/local/bin/download.sh
