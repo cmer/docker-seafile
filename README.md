@@ -83,7 +83,7 @@ If you want to use MySQL/MariaDB, the following variables are needed:
 **Other optional ENV variables**
 * **FORCE_PERMISSIONS**: Force chown'ing Seafile mounted volume at startup. This is slow. Only use if needed. (default: false)
 
-If you plan on omitting /seafile as a volume and mount the subdirectories instead, you'll need to additionally specify `SEAHUB_DB_DIR` which containes the subdirectory of /seafile the *seahub.db* file shall be put in.
+If you plan on omitting /seafile as a volume and mount the subdirectories instead, you'll need to additionally specify `SEAHUB_DB_DIR` which contains the subdirectory of /seafile the *seahub.db* file shall be put in.
 
 There are some more variables which could be changed but have not been tested and are probably not fully functional as well. Therefore those not mentioned here. Inspect the `seafile-entrypoint.sh` script if you have additional needs for customization.
 
