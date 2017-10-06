@@ -1,19 +1,42 @@
-: ${PRO_URL=https://download.seafile.com/d/6e5297246c/?p=/pro}
 : ${BASEPATH=/opt/haiwen}
-: ${PRO:false}
+: ${VERSION=latest}
+: ${PRO=false}
+: ${ARCH=`uname -p`}
 
-if [ "$PRO" = true ] ; then
-  echo "Installing Professional Edition..."
-  pro_user_id=`echo $PRO_URL | ack -o '(?<=\/d\/)[a-z0-9]*(?=\/)'`
-  pro_filename=$(curl -sL $PRO_URL \
-    | ack -o '(?<=\")seafile-pro-server.*x86-64\.tar\.gz(?=\")'|sort -r|head -1)
-  download_path="https://download.seafile.com/d/$pro_user_id/files/?p=/pro/$pro_filename&dl=1"
+ARCH="${ARCH/_/-}"
+get_url_cmd="/usr/local/bin/seafile_download_url --version $VERSION --arch $ARCH"
+# get_url_cmd="./seafile_download_url --quiet --version $VERSION --arch $ARCH"
+
+echo   "Generating download URL for:"
+echo   "  VERSION: $VERSION"
+echo   "  ARCHITECTURE: $ARCH"
+printf "  EDITION: "
+
+if [[ "$PRO" -eq true ]] ; then
+  echo "Professional"
+  $get_url_cmd+=" --pro"
 else
-  echo "Installing Community Edition..."
-  download_path=$(curl -sL https://www.seafile.com/en/download/ \
-    | grep -oE 'https://.*seafile-server.*x86-64.tar.gz'|sort -r|head -1)
+  echo "Community"
 fi
 
-echo "Downloading & Extracting $download_path..."
-curl -sL $download_path | tar -C $BASEPATH -xz
-chown -R seafile:seafile $BASEPATH
+download_url=`$get_url_cmd`
+
+if [[ $? -ne 0 ]] ; then
+  echo "ERROR: Could not obtain download URL. Aborting."
+  exit 1
+else
+  echo ""
+  if [[ "$PRO" -eq true ]] ; then
+    echo "Installing Professional Edition..."
+  else
+    echo "Installing Community Edition..."
+  fi
+
+  echo ""
+  echo "Downloading & Extracting $download_url..."
+  curl -sL $download_url | tar -C $BASEPATH -xz
+  chown -R seafile:seafile $BASEPATH
+
+  echo ""
+  echo "Done!"
+fi

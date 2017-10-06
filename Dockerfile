@@ -3,6 +3,7 @@ MAINTAINER Carl Mercier <foss@carlmercier.com>
 
 COPY ["install.sh", "/tmp/"]
 COPY ["download.sh", "/usr/local/bin/"]
+COPY ["seafile_download_url", "/usr/local/bin/"]
 COPY ["seafile-entrypoint.sh", "/usr/local/bin/"]
 
 RUN /tmp/install.sh
