@@ -13,7 +13,7 @@ printf "  EDITION: "
 
 if [ "$PRO" = true ] ; then
   echo "Professional"
-  $get_url_cmd+=" --pro"
+  $get_url_cmd="$get_url_cmd --pro"
 else
   echo "Community"
 fi
