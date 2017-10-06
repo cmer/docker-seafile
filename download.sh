@@ -5,14 +5,13 @@
 
 ARCH="${ARCH/_/-}"
 get_url_cmd="/usr/local/bin/seafile_download_url --version $VERSION --arch $ARCH"
-# get_url_cmd="./seafile_download_url --quiet --version $VERSION --arch $ARCH"
 
 echo   "Generating download URL for:"
 echo   "  VERSION: $VERSION"
 echo   "  ARCHITECTURE: $ARCH"
 printf "  EDITION: "
 
-if [[ "$PRO" -eq true ]] ; then
+if [ "$PRO" = true ] ; then
   echo "Professional"
   $get_url_cmd+=" --pro"
 else
@@ -21,12 +20,12 @@ fi
 
 download_url=`$get_url_cmd`
 
-if [[ $? -ne 0 ]] ; then
+if [ $? -ne 0 ] ; then
   echo "ERROR: Could not obtain download URL. Aborting."
   exit 1
 else
   echo ""
-  if [[ "$PRO" -eq true ]] ; then
+  if [ "$PRO" = true ] ; then
     echo "Installing Professional Edition..."
   else
     echo "Installing Community Edition..."
