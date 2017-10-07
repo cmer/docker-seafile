@@ -1,0 +1,126 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'net/http'
+require 'rexml/document'
+require 'date'
+require 'open-uri'
+
+def download_url(version, arch, pro)
+  if pro
+    version.nil? ? pro_download_latest_url(arch) : pro_download_url(version, arch)
+  else
+    version.nil? ? community_download_latest_url(arch) : community_download_url(version, arch)
+  end
+end
+
+def community_download_url(version, arch)
+  uri = "https://download.seadrive.org/seafile-server_#{version}_#{arch}.tar.gz"
+  url_exist?(uri) ? uri : nil
+end
+
+def community_download_latest_url(arch)
+  base_url = 'https://download.seadrive.org'
+
+  xml_data = Net::HTTP.get_response(URI.parse(base_url)).body
+  doc = REXML::Document.new(xml_data)
+
+  latest_file = nil
+  latest_mod  = nil
+
+  doc.elements.each('ListBucketResult/Contents') do |element|
+    file = element.elements['Key'].text
+    last_mod = DateTime.parse(element.elements['LastModified'].text)
+
+    if file.match(/#{arch}\.tar\.gz$/) && (latest_mod.nil? || last_mod > latest_mod)
+      latest_file = file
+      latest_mod = last_mod
+    end
+  end
+
+  base_url + "/" + latest_file if latest_file
+end
+
+def pro_download_url(version, arch)
+  pro_download_latest_url(arch, version)
+end
+
+def url_exist?(url_string)
+  url = URI.parse(url_string)
+  req = Net::HTTP.new(url.host, url.port)
+  req.use_ssl = (url.scheme == 'https')
+  path = url.path unless url.path.to_s == ''
+  res = req.request_head(path || '/')
+  if res.kind_of?(Net::HTTPRedirection)
+    url_exist?(res['location'])
+  else
+    res.code[0] == "2"
+  end
+rescue Errno::ENOENT
+  false #false if can't find the server
+end
+
+def pro_download_latest_url(arch, version = nil)
+  base_url = 'https://download.seafile.com/d/6e5297246c/?p=/pro'
+
+  html = open(base_url).read
+  version_regexp = if version.nil?
+    /.*\".*server_(.*)_#{arch}\.tar\.gz\">/i
+  else
+    /.*\".*server_(#{version.tr(".", "\.")})_#{arch}\.tar\.gz\">/i
+  end
+  versions = html.scan(version_regexp)
+
+  return nil if versions == []
+
+  versions = versions.flatten
+  latest_version = versions.map {|v| Gem::Version.new v}.max.to_s
+
+  download_url = "https://download.seafile.com/d/6e5297246c/files/?p=/pro/seafile-pro-server_#{latest_version}_#{arch}.tar.gz&dl=1"
+end
+
+def start
+  options = {}
+
+  optparse = OptionParser.new do|opts|
+    opts.banner = "Usage: seafile_download_url [options]"
+
+    options[:arch] = 'x86-64'
+    opts.on( '-a', '--arch ARCHITECTURE', "Sets the architecture. Defaults to 'x86-64'." ) do |arch|
+      options[:arch] = arch
+    end
+
+    options[:pro] = false
+    opts.on( '-p', '--pro', 'Obtain the URL for the Professional edition of Seafile.' ) do
+      options[:pro] = true
+    end
+
+    options[:quiet] = false
+    opts.on( '-q', '--quiet', 'Quiet output.' ) do
+      options[:quiet] = true
+    end
+
+    options[:version] = nil
+    opts.on( '-v', '--version VERSION', 'Specify the version, otherwise, the latest version will be returned.' ) do |version|
+      options[:version] = (version.downcase == 'latest' || version.downcase == 'last') ? nil : version
+    end
+
+    opts.on( '-h', '--help', 'Display this screen' ) do
+      puts opts
+      exit
+    end
+  end
+
+   optparse.parse!
+
+   url = download_url(options[:version], options[:arch], options[:pro])
+
+   if url
+    puts url
+  else
+    STDERR.puts "ERROR: Could not obtain URL for given parameters." unless options[:quiet]
+    exit 1
+  end
+end
+
+start

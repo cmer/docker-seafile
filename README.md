@@ -3,6 +3,7 @@ Seafile Community or Professional Edition Docker container based on Ubuntu
 ### Features
 
 * Tailored to use the newest Seafile version at rebuild (so it should always be up-to-date)
+* Ability to lock the installation to a specific version
 * Running under dumb-init to prevent the "child reaping problem"
 * Configurable to run with MySQL/MariaDB or SQLite
 * Auto-setup at initial run
@@ -70,7 +71,8 @@ If you want to use MySQL/MariaDB, the following variables are needed:
 * **MYSQL_SERVER**: Address of your MySQL server
 * **MYSQL_USER**: MySQL user Seafile should use
 * **MYSQL_USER_PASSWORD**: Password for said MySQL User
-*Optionali:*
+
+*Optional:*
 * **MYSQL_PORT**: Port MySQL runs on
 
 **Optional ENV variables for auto setup with MySQL/MariaDB**
@@ -82,6 +84,8 @@ If you want to use MySQL/MariaDB, the following variables are needed:
 
 **Other optional ENV variables**
 * **FORCE_PERMISSIONS**: Force chown'ing Seafile mounted volume at startup. This is slow. Only use if needed. (default: false)
+* **VERSION**: Version number to install (default: latest)
+* **ARCH**: CPU Architecture. x86-64 or i386. (defaults to Linux installation architecture)
 
 If you plan on omitting /seafile as a volume and mount the subdirectories instead, you'll need to additionally specify `SEAHUB_DB_DIR` which contains the subdirectory of /seafile the *seahub.db* file shall be put in.
 
@@ -100,4 +104,3 @@ If you want to run SeaHub in FastCGI mode, you can set ENV variables **SEAFILE_F
 ### Credits
 
 Special thanks to [Till Wiese](https://github.com/m3adow). This container is a fork of his work. He deserves all the credit.
-
