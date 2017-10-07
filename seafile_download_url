@@ -76,7 +76,7 @@ def pro_download_latest_url(arch, version = nil)
   versions = versions.flatten
   latest_version = versions.map {|v| Gem::Version.new v}.max.to_s
 
-  download_url = base_url + "/seafile-pro-server_#{latest_version}_#{arch}.tar.gz&dl=1"
+  download_url = "https://download.seafile.com/d/6e5297246c/files/?p=/pro/seafile-pro-server_#{latest_version}_#{arch}.tar.gz&dl=1"
 end
 
 def start
